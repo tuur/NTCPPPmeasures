@@ -3,7 +3,6 @@ library(dplyr)
 library(mice)
 library(haven)
 
-# DO NOT USE FOR PAPER UNTIL ALL TODOS ARE RESOLVED 
 
 # ==========================================================
 #        LOAD RAW DATA     
@@ -27,7 +26,7 @@ for (i in 1:10){
 #citor_val <- readRDS("~/Desktop/Research/NTCP - Updating/code/data/CITOR.validatie.data.RDS")
 
 # MBS Data (but without proton plans for RT patients)
-load("~/Desktop/Research/NTCP - Updating/code/data/mba_data.RData") #! TODO: currently MBS data has no PT plans!
+load("~/Desktop/Research/NTCP - Updating/code/data/mba_data.RData") 
 
 # proton plans for RT patients (in a separate file)
 ptplans_rtps = read_sav("~/Desktop/Research/NTCP - uitkomstmaten/code/data/IMPT_DVH_data_van_fotonen patienten_UPDATE19072021.sav")
@@ -137,9 +136,7 @@ prep_val_df <- function(df){
   #prepped_df["Xerostomia_at_M6_2plus"] = lapply(select(df,'XER_M06'), function(x) as.logical(x %in% c('Grade 2','Grade 2 (moderate xerostomia, altered diet)','Grade 3','Grade 3 (complete dryness)','Grade 4','Grade 5')))   
   #prepped_df["Xerostomia_at_M6_3plus"] = lapply(select(df,'XER_M06'), function(x) as.logical(x %in% c('Grade 3','Grade 3 (complete dryness)','Grade 4','Grade 5')))  
   
-  
-  # !TODO: Update RT parotid_left and right
-  prepped_df["RT_Dmean_parotid_low"] = lapply(select(df,paste('Parotid_low_Dmean',RT_suffix,sep='')), function(x) x)  
+    prepped_df["RT_Dmean_parotid_low"] = lapply(select(df,paste('Parotid_low_Dmean',RT_suffix,sep='')), function(x) x)  
   prepped_df["RT_Dmean_parotid_high"] = lapply(select(df,paste('Parotid_high_Dmean',RT_suffix,sep='')), function(x) x)  
 
   prepped_df["RT_sqrt_Dmean_ipsilateral_parotid_sqrt_Dmean_contralateral_parotid"] = sqrt(select(prepped_df,"RT_Dmean_parotid_low"))+sqrt(select(prepped_df,"RT_Dmean_parotid_high"))
@@ -168,7 +165,6 @@ prep_mbs_df <- function(df){
   RT_suffix <- '_LIPVMAT'
   #RT_suffix = '_IMRT'
   
-  #! TODO: set to IMPT once proton plans are available !
   PT_suffix <- '_LIPIMPT'
 
   prepped_df <- data.frame(matrix(NA, ncol = length(relevant_mbs_columns), nrow = nrow(df)))
@@ -183,7 +179,7 @@ prep_mbs_df <- function(df){
   prepped_df["Dysphagia_at_baseline_2"] = lapply(select(df,'DYSFAGIE_UMCGshort_BSL'), function(x) as.logical(x=='Grade 2 (soft food)')) 
   prepped_df["Dysphagia_at_baseline_3_5"] = lapply(select(df,'DYSFAGIE_UMCGshort_BSL'), function(x) x %in% c('Grade 3 (liquids only )','Grade 3 (liquids only)','Grade 3-5 (liquids only or tube feeding dependent)'))   
 
-  # !TODO: No M6 info
+  # ! No M6 info
   #prepped_df["Dysphagia_at_M6_2plus"] = lapply(select(df,'DYSFAGIE_UMCGshortv2_M06'), function(x) x %in% c('Grade 2 (soft food)','Grade 3_5 (liquids only or tube feeding dependent)'))  
   #prepped_df["Dysphagia_at_M6_3plus"] = lapply(select(df,'DYSFAGIE_UMCGshortv2_M06'), function(x) as.logical(x=='Grade 3_5 (liquids only or tube feeding dependent)'))  
   
@@ -191,11 +187,10 @@ prep_mbs_df <- function(df){
   prepped_df["Xerostomia_at_baseline_2"] = lapply(select(df,'Q41_BSL'), function(x) as.logical(x=='Een beetje'))
   prepped_df["Xerostomia_at_baseline_3_4"] = lapply(select(df,'Q41_BSL'), function(x) as.logical(x %in% c('Nogal','Heel erg')))  
 
-  # !TODO: No M6 info
+  # ! No M6 info
   #prepped_df["Xerostomia_at_M6_2plus"] = lapply(select(df,'Q41_M06'), function(x) as.logical(x %in% c('Nogal','Heel erg')))   
   #prepped_df["Xerostomia_at_M6_3plus"] = lapply(select(df,'Q41_M06'), function(x) as.logical(x %in% c('Heel erg')))  
   
-  # !TODO: Update RT parotid_left and right
   prepped_df["RT_Dmean_parotid_low"] = lapply(select(df,paste('Parotid_low_Dmean',RT_suffix,sep='')), function(x) x)  
   prepped_df["RT_Dmean_parotid_high"] = lapply(select(df,paste('Parotid_high_Dmean',RT_suffix,sep='')), function(x) x)  
   
@@ -210,7 +205,6 @@ prep_mbs_df <- function(df){
   prepped_df["Preselected_for_plan_comparison"] = lapply(select(df,'Preselectie'), function(x) x=='Positief')  
   prepped_df["Indication_for_PT"] = lapply(select(df,'Planvergelijking'), function(x) x=='Positief')   
   
-  # !TODO: Update PT parotid_left and right
   prepped_df["PT_Dmean_parotid_low"] = lapply(select(df,paste('Parotid_low_Dmean',PT_suffix,sep='')), function(x) x)  
   prepped_df["PT_Dmean_parotid_high"] = lapply(select(df,paste('Parotid_high_Dmean',PT_suffix,sep='')), function(x) x)  
   
@@ -224,11 +218,11 @@ prep_mbs_df <- function(df){
 }
 
 mbs_data <- list()
-#mbs_raw_data <- list()
+
 for (impset in mbs_input_df){
   # prepare data and impute any missings
   raw_prepped_data = prep_mbs_df(impset)
   imputed_prepped_data <- complete(mice(data=raw_prepped_data, m = 1 ,seed = sample(1:100, 1, replace=FALSE)))
   mbs_data <- append(list(imputed_prepped_data),mbs_data)
-  #mbs_raw_data <- append(list(raw_prepped_data),mbs_raw_data)
+
 }
