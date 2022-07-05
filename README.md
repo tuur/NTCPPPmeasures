@@ -1,6 +1,6 @@
 # README
 
-This repository contains the code used to obtain results in the submitted article.
+This repository contains the code used to obtain results in the submitted article (a reference to the article will be included upon acceptance).
 For privacy reasons the patient data is not shared.
 
 The following .R scripts are shared:
