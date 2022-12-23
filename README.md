@@ -1,9 +1,10 @@
 # README
 
-This repository contains the code used to obtain results in the submitted article (a reference to the article will be included here upon acceptance).
+This repository contains the code used to obtain results in the open access article [The relation between prediction model performance measures and patient selection outcomes for proton therapy in head and neck cancer](https://doi.org/10.1016/j.radonc.2022.109449), published in Radiotherapy and Oncology.
+
 For privacy reasons the patient data is not shared.
 
-The following .R scripts are shared:
+However, the following .R scripts are shared:
 
   `LR.R` ~ Contains a torch implementation of logistic regression (that allows recalibration).
 
