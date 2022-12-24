@@ -16,14 +16,14 @@ setwd(dirname(rstudioapi::getSourceEditorContext()$path))
 # CITL(val) against 
 
 prefix="/Users/aleeuw15/Desktop/Research/NTCP - uitkomstmaten/code/"
-plot_dir="plots-27042022/"
+plot_dir="plots-24122022/"
 #df <- readRDS(paste(prefix,'results_bs1_imp1_100steps_03112021.rds', collapse='', sep=''))
 #df <- readRDS(paste(prefix,'results_bs1_imp1_100steps_27042022.rds', collapse='', sep=''))
 
 df <- readRDS(paste(prefix,'results_bs1_imp1_100steps_02052022.rds', collapse='', sep=''))
 
 
-dpi=150
+dpi=300
 
 # select all data where citl step != NA
 
@@ -52,7 +52,8 @@ for (metric in c('citl','slope','auc')){
     plot_df <- gather(selected_df, key = measure, value = Rate, 
                       c(yvar1, yvar2))
     
-    p = ggplot(plot_df, aes(x=as.numeric(!!as.symbol(xvar)), y = as.numeric(Rate), group = measure, color=measure)) + 
+#    p = ggplot(plot_df, aes(x=as.numeric(!!as.symbol(xvar)), y = as.numeric(Rate), group = measure, color=measure)) + 
+    p = ggplot(plot_df, aes(x=as.numeric(!!as.symbol(xvar)), y = as.numeric(Rate), group = measure, color=measure, shape=measure)) + 
       geom_point(size=3)+
       stat_smooth(method = "loess") + # ,method.args = list(family = "symmetric"))+
       #stat_poly_eq(formula = y~x, parse = TRUE, show.legend=TRUE, aes(label =  stat(eq.label)), label.y = "middle", label.x = "middle") +
@@ -130,14 +131,14 @@ for (metric in c('citl','slope','auc')){
     #plot_df <- gather(selected_df, key = measure, value = Rate, 
     #             c(yvar1, yvar2, yvar3, yvar4))
     p = ggplot(selected_df, aes(x=as.numeric(!!as.symbol(xvar)))) +
-      stat_smooth(aes(y=as.numeric(!!as.symbol(yvar1))), size=1, col='blue')+
-      geom_point(aes(y=as.numeric(!!as.symbol(yvar1))), size=1, col='blue')+
-      stat_smooth(aes(y=as.numeric(!!as.symbol(yvar2))), size=1, col='green')+
-      geom_point(aes(y=as.numeric(!!as.symbol(yvar2))), size=1, col='green')+
-      stat_smooth(aes(y=as.numeric(!!as.symbol(yvar3))), size=1, col='red')+
-      geom_point(aes(y=as.numeric(!!as.symbol(yvar3))), size=1, col='red')+
-      stat_smooth(aes(y=0.1*as.numeric(!!as.symbol(yvar4))), size=1, col='orange')+
-      geom_point(aes(y=0.1*as.numeric(!!as.symbol(yvar4))), size=1, col='orange')+
+      stat_smooth(aes(y=as.numeric(!!as.symbol(yvar1))), size=1, col='blue', shape=1)+
+      geom_point(aes(y=as.numeric(!!as.symbol(yvar1))), size=1, col='blue', shape=1)+
+      stat_smooth(aes(y=as.numeric(!!as.symbol(yvar2))), size=1, col='green', shape=2)+
+      geom_point(aes(y=as.numeric(!!as.symbol(yvar2))), size=1, col='green', shape=2)+
+      stat_smooth(aes(y=as.numeric(!!as.symbol(yvar3))), size=1, col='red', shape=3)+
+      geom_point(aes(y=as.numeric(!!as.symbol(yvar3))), size=1, col='red', shape=3)+
+      stat_smooth(aes(y=0.1*as.numeric(!!as.symbol(yvar4))), size=1, col='orange', shape=4)+
+      geom_point(aes(y=0.1*as.numeric(!!as.symbol(yvar4))), size=1, col='orange', shape=4)+
       #stat_smooth(aes(y=as.symbol(yvar1)), method = "loess") + # ,method.args = list(family = "symmetric"))+
       geom_vline(xintercept = x_origin, linetype='dashed', color='red')+
       xlab("")+
@@ -474,7 +475,7 @@ p = ggplot(data = logistic_df)+
   geom_point(aes(x=-1.39,y=.2),colour="red", size=1.5)+
   geom_point(aes(x=1.39,y=.16),colour="red", size=1.5)+
   geom_point(aes(x=-1.39,y=.16),colour="red", size=1.5)+
-  theme_minimal(base_size = 22)+
+  theme_minimal(base_size = 18)+
   geom_segment(x=0.4,y=1/(1+exp(-0.4)), xend=0.4, yend=(1/(1+exp(0.4))), linetype='dotted', color='red')+
   geom_segment(x=-0.4,y=1/(1+exp(0.4)), xend=0.4, yend=(1/(1+exp(0.4))), color='orange', linetype='solid')+
   xlab("Linear predictor")+
@@ -491,6 +492,4 @@ p = ggplot(data = logistic_df)+
            color="red",size=7)
 
 
-
-
-ggsave(paste(plot_dir,'Fig X - Exp Box.png'), plot=p, dpi = 1200, width = 20, height = 20, units = "cm", bg = "white")
+ggsave(paste(plot_dir,'Fig X - Exp Box20n.png'), plot=p, dpi = 300, width = 30, height = 20, units = "cm", bg = "white")
