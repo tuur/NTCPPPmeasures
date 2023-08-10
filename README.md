@@ -1,6 +1,8 @@
 # README
 
-This repository contains the code used to obtain results in the open access article [The relation between prediction model performance measures and patient selection outcomes for proton therapy in head and neck cancer](https://doi.org/10.1016/j.radonc.2022.109449), published in Radiotherapy and Oncology.
+This repository contains the code used to obtain results in the open access article:
+
+> Leeuwenberg AM, Reitsma JB, Hoogland J, van der Schaaf A, Hoebers FJ, Wijers OB, Langendijk JA, Moons KG, Schuit E. [The relation between prediction model performance measures and patient selection outcomes for proton therapy in head and neck cancer](https://doi.org/10.1016/j.radonc.2022.109449). Radiotherapy and Oncology. 2023 Feb 1;179:109449.
 
 For privacy reasons the patient data is not shared.
 
