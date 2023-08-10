@@ -21,3 +21,6 @@ However, the following .R scripts are shared:
   `experiment.R` ~ The main scripts running the experiments (incl. calls to the other scripts).
   
 If you have any questions regarding the article or code. Feel free to email!
+
+### Contact
+Email: aleeuw15@umcutrecht.nl
